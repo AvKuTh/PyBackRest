@@ -1,0 +1,140 @@
+swagger: "2.0"
+info:
+  description: This is the swagger config file 
+  version: "1.0.0"
+  title: Swagger REST
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /firms:
+    get:
+      operationId: firms.read_firms
+      tags:
+        - Firms
+      summary: Read the entire list of firms
+      description: Read the list of firms
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of firms to get 
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning
+          required: false
+      responses:
+        200:
+          description: Successfully read firm list operation
+          schema:
+            type: array
+            items:
+              properties:
+                firmName:
+                  type: string
+                fid:
+                  type: integer
+                timestamp:
+                  type: string
+
+    post:
+      operationId: firms.create
+      tags:
+        - Firms
+      summary: Create a firm
+      description: Create a new firm
+      parameters:
+        - name: firm
+          in: body
+          description: firm
+          required: True
+          schema:
+            type: object
+            properties:
+              firmName:
+                type: string
+                description: Name of firm       
+      responses:
+        201:
+          description: Successfully created firm
+
+  /firms/{fid}:
+    get:
+      operationId: firms.read1
+      tags:
+        - Firms
+      summary: Read one firm
+      description: Read one firm from the firm list
+      parameters:
+        - name: fid
+          in: path
+          description: id of the firm
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Success
+          schema:
+            properties:
+              firmName:
+                type: string
+              fid:
+                type: integer
+              timestamp:
+                type: string
+
+    put:
+      operationId: firms.update
+      tags:
+        - Firms
+      summary: Update a firm
+      description: Update a firm
+      parameters:
+        - name: fid
+          in: path
+          description: id of the firm
+          type: integer
+          required: True
+        - name: firm
+          in: body
+          schema:
+            type: object
+            properties:
+              firmName:
+                type: string
+              fid:
+                type: integer
+      responses:
+        200:
+          description: Success
+
+    delete:
+      operationId: firms.delete
+      tags:
+        - Firms
+      summary: Delete a firm
+      description: Delete a firm
+      parameters:
+        - name: fid
+          in: path
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Success
+
+
+
+
+
+
+
+
+
